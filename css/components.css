@@ -1,0 +1,151 @@
+/* ========================================
+   组件样式
+   ======================================== */
+
+/* 代币容器 */
+.token-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+}
+
+/* 公共资源：三行每行两个 */
+.token-container.token-two-rows {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 6px;
+    padding: 6px;
+    justify-items: center;
+    align-items: center;
+}
+
+/* 代币样式：白字黑边（含黄色球统一白色） */
+.token {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.2);
+    color: #fff;
+    text-shadow: 0 0 2px #000, 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* 对手列表项（竖排时紧凑，每条两行） */
+.opp-item {
+    padding: 4px 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    font-size: 9px;
+    border: 1px solid #333;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.opp-item .opp-line-name-score {
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ffcb05;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* 对手已扣资源：小圈展示，仅显示有的（和面前资源同风格） */
+.opp-item .opp-tokens-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3px;
+    align-items: center;
+}
+
+.opp-item .opp-tokens-row .token {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    font-size: 9px;
+    cursor: default;
+    pointer-events: none;
+}
+
+.legend-rare-row .opp-item {
+    margin: 0 2px;
+}
+
+.opp-item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* 模态框 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #222;
+    color: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    width: 280px;
+    border: 1px solid #444;
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.modal-btn:hover {
+    opacity: 0.9;
+}
+
+.cancel-btn {
+    background: #555;
+}
+
+.close-btn {
+    background: #2c3e50;
+}
+
+/* 详情卡片容器 */
+.detail-cards {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+}
+
+.detail-cards .card {
+    transform: scale(0.9);
+    margin: -5px;
+}

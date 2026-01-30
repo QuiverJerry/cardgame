@@ -1,0 +1,49 @@
+/* ========================================
+   基础样式和CSS变量
+   ======================================== */
+
+:root {
+    /* 基础色值（红 #ad0000 / 粉 #fb87ad 全局统一） */
+    --fire: #ad0000;
+    --water: #42a5f5;
+    --electric: #ffee58;
+    --psychic: #fb87ad;
+    --dark: #78909c;
+    --masterball: #ab47bc;
+    --bg-dark: #202124;
+    
+    /* 渐变色 - 卡牌背景等，红/粉与上一致 */
+    --grad-fire: linear-gradient(135deg, #8a0000 0%, #ad0000 100%);
+    --grad-water: linear-gradient(135deg, rgba(25, 118, 210, 0.25) 0%, rgba(68, 138, 255, 0.25) 100%);
+    --grad-electric: linear-gradient(135deg, rgba(251, 192, 45, 0.2) 0%, rgba(255, 235, 59, 0.2) 100%);
+    --grad-psychic: linear-gradient(135deg, #e86b9a 0%, #fb87ad 100%);
+    --grad-dark: linear-gradient(135deg, rgba(55, 71, 79, 0.3) 0%, rgba(96, 125, 139, 0.3) 100%);
+}
+
+/* 重置样式 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 基础body样式 */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg-dark);
+    color: #eee;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 辅助色类 */
+.bg-fire { background-color: var(--fire); }
+.bg-water { background-color: var(--water); }
+.bg-electric { background-color: var(--electric); }
+.bg-psychic { background-color: var(--psychic); }
+.bg-dark { background-color: var(--dark); }
+.bg-masterball { background-color: var(--masterball); }

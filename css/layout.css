@@ -1,0 +1,396 @@
+/* ========================================
+   界面布局样式
+   ======================================== */
+
+/* 登录界面 */
+#loginScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    color: #333;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background: #ffcb05;
+    color: #3375b9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 游戏主界面 */
+#gameScreen {
+    display: none;
+    height: 100%;
+    flex-direction: column;
+}
+
+/* 顶部栏 */
+.top-bar {
+    height: 45px;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    border-bottom: 1px solid #444;
+    flex-shrink: 0;
+}
+
+.top-bar-score {
+    font-weight: bold;
+    font-size: 13px;
+    color: #ffcb05;
+    flex-shrink: 0;
+}
+
+.turn-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#turnIndicator {
+    font-weight: bold;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+#endTurnBtn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* 主游戏区域 */
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background: #181818;
+}
+
+/* 传说 | 公共资源(两行) | 稀有 同一行 */
+.legend-rare-row {
+    display: flex;
+    align-items: stretch;
+    min-height: 125px;
+    padding: 5px;
+    gap: 8px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+    margin: 5px;
+    flex-shrink: 0;
+}
+
+.legend-rare-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.legend-col, .rare-col {
+    flex: 0 0 auto;
+    min-width: 95px;
+}
+
+.bank-col {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100px;
+}
+
+/* 对手信息：竖排，在公共资源右侧 */
+.opp-col {
+    flex: 0 0 auto;
+    min-width: 110px;
+    max-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.opp-list-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+}
+
+.card-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 115px;
+    flex: 1;
+}
+
+/* 市场区域 */
+.market-area {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-row {
+    display: flex;
+    gap: 8px;
+    padding: 6px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+    align-items: center;
+    min-height: 125px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.card-row::-webkit-scrollbar {
+    display: none;
+}
+
+.row-info {
+    width: 35px;
+    text-align: center;
+    color: #777;
+    font-size: 10px;
+    flex-shrink: 0;
+    line-height: 1.2;
+    font-weight: bold;
+}
+
+/* 公共资源代币：三行每行两个（与 components 中 .token-container.token-two-rows 一致） */
+.token-two-rows {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 6px;
+    padding: 6px;
+    justify-items: center;
+    align-items: center;
+}
+
+/* 侧边栏（对手列表等） */
+.sidebar {
+    width: 100%;
+    background: #111;
+    border-top: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+    font-size: 10px;
+    text-align: center;
+    padding: 4px;
+    background: rgba(255,255,255,0.05);
+    color: #888;
+}
+
+/* 游戏日志 */
+.log-area {
+    height: 40px;
+    background: rgba(0,0,0,0.5);
+    font-size: 9px;
+    color: #00ff00;
+    padding: 4px 10px;
+    overflow-y: hidden;
+    line-height: 1.2;
+}
+
+/* 玩家面板顶部一行：资源(小) + 分数/收藏/永久能力(字大)，高度一致 */
+.dashboard-stats-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 6px 8px;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    min-height: 36px;
+}
+
+.stats-tokens {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+/* 资源代币：小一点 */
+.stats-tokens .token {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 10px !important;
+    min-width: 22px;
+    min-height: 22px;
+}
+
+.stats-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffcb05;
+}
+
+.stats-text .ability-stats-label {
+    color: rgba(255,255,255,0.7);
+    margin-right: 2px;
+}
+
+.stats-text #myAbilityStatFire,
+.stats-text #myAbilityStatWater,
+.stats-text #myAbilityStatElectric,
+.stats-text #myAbilityStatPsychic,
+.stats-text #myAbilityStatDark {
+    color: rgba(255,255,255,0.95);
+}
+
+/* 玩家面板 */
+.player-dashboard {
+    height: 160px;
+    background: #0a0a0a;
+    border-top: 2px solid #333;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.dashboard-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.dashboard-sec {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid #222;
+}
+
+/* 保留区 1/4，收藏图鉴 3/4 */
+.dashboard-sec:first-child {
+    flex: 1;
+}
+
+.dashboard-sec:last-child {
+    flex: 3;
+    border-right: none;
+}
+
+.stack-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    overflow-x: auto;
+    padding: 0 10px;
+}
+
+.stack-container .card {
+    margin-left: -60px;
+    transform: scale(0.85);
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    overflow: visible;          /* 叠放时允许左侧竖写进化目标完整显示，不裁切 */
+}
+
+.stack-container .card:first-child {
+    margin-left: 0;
+}
+
+/* 叠放时：不显示价格球；顺序为分数→能力→进化目标→大号条件圆圈 */
+.stack-container .card-cost-sidebar {
+    width: 26px;
+    justify-content: flex-start;
+    gap: 4px;
+}
+
+.stack-container .card-cost-list {
+    display: none;
+}
+
+/* 无分数卡牌也保留分数位占位 */
+.stack-container .card-points {
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stack-container .sidebar-ability {
+    display: flex;
+}
+
+.stack-container .card .evo-mini {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 2.2em;           /* 保证竖写区域有高度，避免被压成 0 */
+    overflow: visible;
+}
+
+.stack-container .evo-mini-target {
+    font-size: 14px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: visible;          /* 覆盖 base 的 overflow:hidden，避免竖排文字被裁掉 */
+    max-width: none;            /* 竖排时不再限制宽度，避免裁切 */
+}
+
+/* 叠放时所需条件：字号与圆圈加大 */
+.stack-container .evo-cost-badge-mini {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
