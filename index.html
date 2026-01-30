@@ -38,13 +38,10 @@
 
         <!-- 主游戏区域 -->
         <div class="main-area">
-            <!-- 传说 | 公共资源 | 对手信息(竖) | 稀有 同一行 -->
+            <!-- 顶部：传说(左) | 对手信息(中) | 稀有(右) -->
             <div class="legend-rare-row">
                 <div class="legend-rare-col legend-col">
                     <div id="legendCardSlot" class="card-slot"></div>
-                </div>
-                <div class="legend-rare-col bank-col">
-                    <div class="token-container token-two-rows" id="bankTokens"></div>
                 </div>
                 <div class="legend-rare-col opp-col">
                     <div id="opponentsList" class="opp-list-vertical"></div>
@@ -53,8 +50,13 @@
                     <div id="rareCardSlot" class="card-slot"></div>
                 </div>
             </div>
-            <!-- 市场区域（最终/二阶/一阶） -->
-            <div class="market-area" id="marketArea"></div>
+            <!-- 市场(左) + 公共资源竖列(右) -->
+            <div class="market-with-bank">
+                <div class="market-area" id="marketArea"></div>
+                <div class="bank-col-right">
+                    <div class="token-container token-vertical" id="bankTokens"></div>
+                </div>
+            </div>
         </div>
 
         <!-- 游戏日志 -->

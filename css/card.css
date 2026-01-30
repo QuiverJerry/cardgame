@@ -3,9 +3,9 @@
    ======================================== */
 
 .card {
-    width: 90px;
-    height: 115px;
-    border-radius: 8px;
+    width: 62px;
+    height: 92px;
+    border-radius: 6px;
     color: white;
     position: relative;
     cursor: pointer;
@@ -32,7 +32,7 @@
 
 /* 左侧侧边栏 (分数 + 价格) */
 .card-cost-sidebar {
-    width: 22px;
+    width: 18px;
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
     display: flex;
@@ -46,7 +46,7 @@
 
 /* 分数样式 */
 .card-points {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 900;
     color: #fff;
     text-shadow: 0 0 3px rgba(255,255,255,0.5);
@@ -69,7 +69,7 @@
     gap: 0;
 }
 .sidebar-ability .ability-icon {
-    font-size: 12px;
+    font-size: 10px;
     line-height: 1;
 }
 
@@ -85,7 +85,7 @@
     padding: 2px 0;
 }
 .evo-mini-target {
-    font-size: 7px;
+    font-size: 6px;
     font-weight: bold;
     color: rgba(255,255,255,0.95);
     line-height: 1.1;
@@ -102,14 +102,14 @@
 
 /* 价格球：白字黑边 */
 .cost-bubble {
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #fff;
-    font-size: 8px;
+    font-size: 7px;
     font-weight: bold;
     border: 1px solid rgba(255,255,255,0.3);
     box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
@@ -119,10 +119,11 @@
 /* 右侧主内容区域 */
 .card-main {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 4px;
+    padding: 2px 3px;
 }
 
 .card-header {
@@ -130,8 +131,8 @@
     justify-content: flex-end; /* 图标靠右 */
     font-weight: 900;
     align-items: center;
-    font-size: 12px;
-    height: 16px;
+    font-size: 10px;
+    height: 14px;
 }
 
 .card-img {
@@ -155,13 +156,13 @@
 }
 
 .evo-target {
-    font-size: 8px;
+    font-size: 7px;
     font-weight: bold;
     display: block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 55px;
+    max-width: 36px;
     opacity: 0.9;
 }
 
@@ -169,11 +170,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     color: white;
-    font-size: 8px;
+    font-size: 7px;
     font-weight: bold;
     margin-top: 1px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.3);

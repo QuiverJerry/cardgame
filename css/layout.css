@@ -45,21 +45,26 @@
     font-weight: bold;
 }
 
-/* 游戏主界面 */
+/* 游戏主界面：宽度弹性，与页面相容 */
 #gameScreen {
     display: none;
     height: 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* 顶部栏 */
 .top-bar {
     height: 45px;
+    min-width: 0;
     background: rgba(0,0,0,0.8);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 0 clamp(6px, 2vw, 12px);
     border-bottom: 1px solid #444;
     flex-shrink: 0;
 }
@@ -96,22 +101,26 @@
     font-size: 12px;
 }
 
-/* 主游戏区域 */
+/* 主游戏区域：宽度弹性，不撑破页面 */
 .main-area {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
     overflow-y: auto;
     background: #181818;
 }
 
-/* 传说 | 公共资源(两行) | 稀有 同一行 */
+/* 顶部：传说(左) | 对手信息(中) | 稀有(右)，宽度弹性 */
 .legend-rare-row {
     display: flex;
     align-items: stretch;
-    min-height: 125px;
+    min-height: 98px;
+    min-width: 0;
+    max-width: 100%;
     padding: 5px;
-    gap: 8px;
+    gap: clamp(4px, 2vw, 8px);
     background: rgba(255,255,255,0.02);
     border-radius: 6px;
     margin: 5px;
@@ -123,24 +132,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    min-width: 0;
 }
 
 .legend-col, .rare-col {
-    flex: 0 0 auto;
-    min-width: 95px;
-}
-
-.bank-col {
     flex: 0 1 auto;
-    min-width: 0;
-    max-width: 100px;
+    min-width: 56px;
+    max-width: 25%;
 }
 
-/* 对手信息：竖排，在公共资源右侧 */
+/* 对手信息：中间弹性占据剩余空间 */
 .opp-col {
-    flex: 0 0 auto;
-    min-width: 110px;
-    max-width: 150px;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 50%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -160,26 +165,66 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 115px;
+    min-height: 92px;
     flex: 1;
 }
 
-/* 市场区域 */
+/* 市场(左) + 公共资源竖列(右)，宽度弹性 */
+.market-with-bank {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    max-width: 100%;
+    gap: clamp(4px, 1.5vw, 8px);
+    padding: 0 clamp(4px, 2vw, 8px) clamp(4px, 2vw, 8px);
+}
+
 .market-area {
-    padding: 5px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 5px 0;
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
+.bank-col-right {
+    flex: 0 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(4px, 1.5vw, 8px);
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+    border-left: 1px solid rgba(255,255,255,0.06);
+}
+
+.bank-col-right .token-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.bank-col-right .token {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
 .card-row {
     display: flex;
-    gap: 8px;
-    padding: 6px;
+    gap: clamp(4px, 1vw, 8px);
+    padding: clamp(4px, 1vw, 6px);
     background: rgba(255,255,255,0.02);
     border-radius: 6px;
     align-items: center;
-    min-height: 125px;
+    min-height: 98px;
+    min-width: 0;
     overflow-x: auto;
     scrollbar-width: none;
 }
@@ -330,8 +375,8 @@
 }
 
 .stack-container .card {
-    margin-left: -60px;
-    transform: scale(0.85);
+    margin-left: -42px;
+    transform: scale(0.88);
     box-shadow: -2px 0 5px rgba(0,0,0,0.5);
     overflow: visible;          /* 叠放时允许左侧竖写进化目标完整显示，不裁切 */
 }
@@ -342,7 +387,7 @@
 
 /* 叠放时：不显示价格球；顺序为分数→能力→进化目标→大号条件圆圈 */
 .stack-container .card-cost-sidebar {
-    width: 26px;
+    width: 22px;
     justify-content: flex-start;
     gap: 4px;
 }
@@ -353,7 +398,7 @@
 
 /* 无分数卡牌也保留分数位占位 */
 .stack-container .card-points {
-    min-height: 18px;
+    min-height: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -373,7 +418,7 @@
 }
 
 .stack-container .evo-mini-target {
-    font-size: 14px;
+    font-size: 12px;
     writing-mode: vertical-rl;
     text-orientation: upright;
     letter-spacing: 0.5px;
@@ -384,9 +429,9 @@
 
 /* 叠放时所需条件：字号与圆圈加大 */
 .stack-container .evo-cost-badge-mini {
-    width: 20px;
-    height: 20px;
-    font-size: 12px;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
     font-weight: bold;
     border-radius: 50%;
     display: flex;

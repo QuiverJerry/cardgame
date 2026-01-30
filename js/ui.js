@@ -302,7 +302,7 @@ const UI = {
                     ${topIconHtml}
                 </div>
                 <div class="card-img">
-                    <div style="font-weight:bold; font-size:${isZoom ? 20 : 10}px;">${card.name}</div>
+                    <div style="font-weight:bold; font-size:${isZoom ? 20 : 9}px;">${card.name}</div>
                     ${evoHtml}
                 </div>
             </div>
