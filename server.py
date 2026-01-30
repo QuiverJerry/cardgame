@@ -118,3 +118,10 @@ async def application(scope, receive, send):
             if not house[room_id]['clients']:
                 logger.info(f"房间 {room_id} 已空，清理内存")
                 del house[room_id]
+
+
+if __name__ == "__main__":
+    import os
+    import uvicorn
+    port = int(os.environ.get("PORT", 8001))
+    uvicorn.run("server:application", host="0.0.0.0", port=port)
