@@ -66,7 +66,7 @@
 
 .top-bar-score {
     font-weight: bold;
-    font-size: 13px;
+    font-size: clamp(10px, 2.5vmin, 14px);
     color: #ffcb05;
     flex-shrink: 0;
 }
@@ -79,7 +79,7 @@
 
 #turnIndicator {
     font-weight: bold;
-    font-size: 12px;
+    font-size: clamp(9px, 2.2vmin, 13px);
     padding: 3px 8px;
     border-radius: 20px;
     background: rgba(255,255,255,0.1);
@@ -93,28 +93,29 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
-    font-size: 12px;
+    font-size: clamp(9px, 2.2vmin, 13px);
 }
 
-/* 主游戏区域 */
+/* 主游戏区域：不滚动，高度弹性填满 */
 .main-area {
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    overflow: hidden;
     background: #181818;
 }
 
-/* 顶部：传说(左) | 对手信息(中) | 稀有(右) */
+/* 顶部：传说(左) | 对手信息(中) | 稀有(右)，高度略弹性 */
 .legend-rare-row {
     display: flex;
     align-items: stretch;
-    min-height: 98px;
-    padding: 5px;
+    min-height: clamp(70px, 12vh, 98px);
+    padding: 4px 5px;
     gap: 8px;
     background: rgba(255,255,255,0.02);
     border-radius: 6px;
-    margin: 5px;
+    margin: 4px 5px;
     flex-shrink: 0;
 }
 
@@ -154,26 +155,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 92px;
+    min-height: 0;
     flex: 1;
 }
 
-/* 市场(左) + 公共资源竖列(右) */
+/* 市场(左) + 公共资源竖列(右)，占满中间区域无空白 */
 .market-with-bank {
     display: flex;
     flex: 1;
     min-height: 0;
+    min-width: 0;
     gap: 6px;
     padding: 0 5px 5px;
+    align-items: stretch;
 }
 
 .market-area {
-    flex: 1;
+    flex: 1 1 0;
     min-width: 0;
-    padding: 5px 0;
+    min-height: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 1mm;
 }
 
 .bank-col-right {
@@ -197,21 +201,33 @@
 .bank-col-right .token {
     width: 28px;
     height: 28px;
-    font-size: 12px;
+    font-size: clamp(9px, 2.2vmin, 13px);
     min-width: 28px;
     min-height: 28px;
 }
 
+/* 场上卡牌行：高度弹性均分，卡牌弹性填满行宽，无右侧空白 */
 .card-row {
     display: flex;
-    gap: 6px;
-    padding: 5px;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    gap: clamp(4px, 1.2vmin, 8px);
+    padding: clamp(3px, 1vmin, 6px);
     background: rgba(255,255,255,0.02);
     border-radius: 6px;
-    align-items: center;
-    min-height: 98px;
-    overflow-x: auto;
+    align-items: stretch;
+    overflow: hidden;
     scrollbar-width: none;
+}
+
+/* 场上卡牌：弹性均分行宽、高度填满行高，无行内空隙 */
+.card-row .card {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
+    height: 100%;
+    width: auto;
 }
 
 .card-row::-webkit-scrollbar {
@@ -222,7 +238,7 @@
     width: 35px;
     text-align: center;
     color: #777;
-    font-size: 10px;
+    font-size: clamp(8px, 2vmin, 11px);
     flex-shrink: 0;
     line-height: 1.2;
     font-weight: bold;
@@ -249,7 +265,7 @@
 }
 
 .sidebar-title {
-    font-size: 10px;
+    font-size: clamp(8px, 2vmin, 11px);
     text-align: center;
     padding: 4px;
     background: rgba(255,255,255,0.05);
@@ -276,11 +292,11 @@
     flex-shrink: 0;
 }
 
-/* 资源代币：小一点 */
+/* 资源代币：小一点，字号弹性 */
 .stats-tokens .token {
     width: 22px !important;
     height: 22px !important;
-    font-size: 10px !important;
+    font-size: clamp(8px, 2vmin, 11px) !important;
     min-width: 22px;
     min-height: 22px;
 }
@@ -289,7 +305,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
+    font-size: clamp(11px, 2.8vmin, 15px);
     font-weight: bold;
     color: #ffcb05;
 }
@@ -392,7 +408,7 @@
 }
 
 .stack-container .evo-mini-target {
-    font-size: 12px;
+    font-size: clamp(9px, 2.2vmin, 13px);
     writing-mode: vertical-rl;
     text-orientation: upright;
     letter-spacing: 0.5px;
@@ -405,7 +421,7 @@
 .stack-container .evo-cost-badge-mini {
     width: 16px;
     height: 16px;
-    font-size: 10px;
+    font-size: clamp(7px, 1.8vmin, 11px);
     font-weight: bold;
     border-radius: 50%;
     display: flex;

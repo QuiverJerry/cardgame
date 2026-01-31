@@ -44,9 +44,9 @@
     flex-shrink: 0;
 }
 
-/* 分数样式 */
+/* 分数样式（字号弹性） */
 .card-points {
-    font-size: 11px;
+    font-size: clamp(8px, 2.2vmin, 12px);
     font-weight: 900;
     color: #fff;
     text-shadow: 0 0 3px rgba(255,255,255,0.5);
@@ -69,7 +69,7 @@
     gap: 0;
 }
 .sidebar-ability .ability-icon {
-    font-size: 10px;
+    font-size: clamp(7px, 2vmin, 11px);
     line-height: 1;
 }
 
@@ -85,7 +85,7 @@
     padding: 2px 0;
 }
 .evo-mini-target {
-    font-size: 6px;
+    font-size: clamp(5px, 1.3vmin, 8px);
     font-weight: bold;
     color: rgba(255,255,255,0.95);
     line-height: 1.1;
@@ -109,7 +109,7 @@
     justify-content: center;
     align-items: center;
     color: #fff;
-    font-size: 7px;
+    font-size: clamp(5px, 1.5vmin, 8px);
     font-weight: bold;
     border: 1px solid rgba(255,255,255,0.3);
     box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
@@ -131,8 +131,9 @@
     justify-content: flex-end; /* 图标靠右 */
     font-weight: 900;
     align-items: center;
-    font-size: 10px;
-    height: 14px;
+    font-size: clamp(7px, 2vmin, 11px);
+    height: auto;
+    min-height: 12px;
 }
 
 .card-img {
@@ -156,7 +157,7 @@
 }
 
 .evo-target {
-    font-size: 7px;
+    font-size: clamp(5px, 1.5vmin, 8px);
     font-weight: bold;
     display: block;
     overflow: hidden;
@@ -174,10 +175,16 @@
     height: 11px;
     border-radius: 50%;
     color: white;
-    font-size: 7px;
+    font-size: clamp(5px, 1.5vmin, 8px);
     font-weight: bold;
     margin-top: 1px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* 卡牌名称（字号弹性，由 .card-img 内使用） */
+.card-img .card-name {
+    font-size: clamp(7px, 2vmin, 11px);
+    font-weight: bold;
 }
 
 /* 放大预览层 */
@@ -192,37 +199,127 @@
     display: none;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
+    padding: 12px;
+    box-sizing: border-box;
 }
 
-#zoomOverlay .card {
-    width: 220px;
-    height: 300px;
-    transform: scale(1.1);
-    font-size: 1.2em;
-    border: 2px solid rgba(255,255,255,0.3);
+/* 长按弹窗：卡图 + 详情区 */
+.zoom-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-width: 320px;
+    width: 100%;
+    background: linear-gradient(180deg, #2a2a2e 0%, #1e1e22 100%);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
 }
 
-#zoomOverlay .card-cost-sidebar {
-    width: 50px;
-    padding: 10px 0;
+.zoom-card-wrap {
+    flex-shrink: 0;
 }
 
-#zoomOverlay .card-points {
-    font-size: 32px;
+#zoomOverlay .zoom-card-wrap .card {
+    width: 180px;
+    height: 246px;
+    font-size: 1em;
+    border: 2px solid rgba(255,255,255,0.25);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 
-#zoomOverlay .cost-bubble {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
+#zoomOverlay .zoom-card-wrap .card-cost-sidebar {
+    width: 44px;
+    padding: 8px 0;
+}
+
+#zoomOverlay .zoom-card-wrap .card-points {
+    font-size: clamp(18px, 4vmin, 26px);
+}
+
+#zoomOverlay .zoom-card-wrap .cost-bubble {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
     border-width: 2px;
 }
 
-#zoomOverlay .card-header {
-    font-size: 20px;
+#zoomOverlay .zoom-card-wrap .card-header {
+    font-size: clamp(14px, 3vmin, 18px);
     height: auto;
 }
 
-#zoomOverlay .card-img div {
-    font-size: 24px !important;
+#zoomOverlay .zoom-card-wrap .card-img .card-name {
+    font-size: clamp(14px, 3.2vmin, 20px) !important;
+}
+
+/* 详情区 */
+.zoom-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    padding: 0 4px;
+}
+
+.zoom-info-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: clamp(11px, 2.6vmin, 14px);
+    line-height: 1.4;
+}
+
+.zoom-info-name {
+    font-size: clamp(14px, 3.2vmin, 18px);
+    font-weight: bold;
+    color: #ffcb05;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.zoom-label {
+    flex-shrink: 0;
+    color: #999;
+    min-width: 4em;
+}
+
+.zoom-value {
+    color: #e0e0e0;
+    word-break: break-all;
+}
+
+.zoom-value.zoom-cost {
+    letter-spacing: 0.5px;
+}
+
+.zoom-info-evo .zoom-value {
+    flex: 1;
+}
+
+.zoom-close-btn {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #3a3a42;
+    color: #fff;
+    font-size: clamp(12px, 2.8vmin, 15px);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
+.zoom-close-btn:hover {
+    background: #4a4a52;
+}
+
+.zoom-close-hint {
+    font-size: clamp(10px, 2.2vmin, 12px);
+    color: #666;
 }

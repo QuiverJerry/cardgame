@@ -43,7 +43,7 @@
     padding: 4px 6px;
     background: rgba(255,255,255,0.05);
     border-radius: 4px;
-    font-size: 9px;
+    font-size: clamp(7px, 1.8vmin, 10px);
     border: 1px solid #333;
     cursor: pointer;
     display: flex;
@@ -58,7 +58,7 @@
     text-overflow: ellipsis;
     color: #ffcb05;
     font-weight: bold;
-    font-size: 13px;
+    font-size: clamp(10px, 2.5vmin, 14px);
 }
 
 /* 对手已扣资源：小圈展示，仅显示有的（和面前资源同风格） */
@@ -75,7 +75,7 @@
     height: 18px;
     min-width: 18px;
     min-height: 18px;
-    font-size: 9px;
+    font-size: clamp(7px, 1.8vmin, 10px);
     cursor: default;
     pointer-events: none;
 }
@@ -121,7 +121,7 @@
     color: white;
     font-weight: bold;
     margin-top: 8px;
-    font-size: 14px;
+    font-size: clamp(12px, 2.8vmin, 15px);
 }
 
 .modal-btn:hover {

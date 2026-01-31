@@ -233,11 +233,14 @@ const UI = {
             el.onclick = onClick;
         }
 
-        // 添加长按放大功能
+        // 添加长按放大功能（触摸 + 鼠标）
         if (!isZoom) {
             el.addEventListener('touchstart', () => this.handleCardTouchStart(card));
             el.addEventListener('touchend', () => this.handleCardTouchEnd());
             el.addEventListener('touchmove', () => this.handleCardTouchEnd());
+            el.addEventListener('mousedown', (e) => { e.preventDefault(); this.handleCardTouchStart(card); });
+            el.addEventListener('mouseup', () => this.handleCardTouchEnd());
+            el.addEventListener('mouseleave', () => this.handleCardTouchEnd());
         }
 
         const icon = ICONS[card.gem] || '';
@@ -267,7 +270,7 @@ const UI = {
             const n = num ? num[0] : '';
             evoMiniHtml = `
                 <div class="evo-mini">
-                    <div class="evo-mini-target" title="进化→${card.evoTo} 需${n}${colorText}">${card.evoTo}</div>
+                    <div class="evo-mini-target" title="${card.evoTo} 需${n}${colorText}">${card.evoTo}</div>
                     <div class="evo-cost-badge evo-cost-badge-mini bg-${colorName}">${n}</div>
                 </div>
             `;
@@ -292,7 +295,7 @@ const UI = {
             const colorName = COLOR_MAP[colorText] || 'dark';
             evoHtml = `
                 <div class="evo-container">
-                    <div class="evo-target">进化➜${card.evoTo}</div>
+                    <div class="evo-target">${card.evoTo}</div>
                     <div class="evo-cost-badge bg-${colorName}">${num}</div>
                 </div>
             `;
@@ -305,7 +308,7 @@ const UI = {
                     ${topIconHtml}
                 </div>
                 <div class="card-img">
-                    <div style="font-weight:bold; font-size:${isZoom ? 20 : 9}px;">${card.name}</div>
+                    <div class="card-name" style="${isZoom ? 'font-size:20px' : ''}">${card.name}</div>
                     ${evoHtml}
                 </div>
             </div>
@@ -319,11 +322,77 @@ const UI = {
      */
     handleCardTouchStart(card) {
         longPressTimer = setTimeout(() => {
-            const overlay = document.getElementById('zoomOverlay');
-            overlay.innerHTML = '';
-            overlay.appendChild(this.createCard(card, null, true));
-            overlay.style.display = 'flex';
+            this.showCardZoom(card);
         }, LONG_PRESS_DELAY);
+    },
+
+    /**
+     * 显示长按卡牌详情弹窗：卡图 + 结构化信息 + 关闭
+     */
+    showCardZoom(card) {
+        const overlay = document.getElementById('zoomOverlay');
+        overlay.innerHTML = '';
+
+        const panel = document.createElement('div');
+        panel.className = 'zoom-panel';
+        panel.addEventListener('click', (e) => e.stopPropagation());
+
+        const cardWrap = document.createElement('div');
+        cardWrap.className = 'zoom-card-wrap';
+        cardWrap.appendChild(this.createCard(card, null, true));
+        panel.appendChild(cardWrap);
+
+        const icon = ICONS[card.gem] || '';
+        const gemCount = card.gemCount || 1;
+        const costParts = Object.entries(card.cost || {})
+            .map(([color, num]) => `${ICONS[color] || ''}×${num}`)
+            .join(' ');
+        let evoText = '';
+        if (card.evoFrom) evoText += `进化自：${card.evoFrom}`;
+        if (card.evoTo) {
+            if (evoText) evoText += '；';
+            evoText += `进化至：${card.evoTo}（${card.evoFee || ''}）`;
+        }
+        if (!evoText) evoText = '—';
+
+        const info = document.createElement('div');
+        info.className = 'zoom-info';
+        info.innerHTML = `
+            <div class="zoom-info-row zoom-info-name">${card.name}</div>
+            <div class="zoom-info-row">
+                <span class="zoom-label">分数</span>
+                <span class="zoom-value">${card.points != null ? card.points : 0}</span>
+            </div>
+            <div class="zoom-info-row">
+                <span class="zoom-label">属性</span>
+                <span class="zoom-value">${icon}×${gemCount}</span>
+            </div>
+            <div class="zoom-info-row">
+                <span class="zoom-label">所需资源</span>
+                <span class="zoom-value zoom-cost">${costParts || '—'}</span>
+            </div>
+            <div class="zoom-info-row zoom-info-evo">
+                <span class="zoom-label">进化</span>
+                <span class="zoom-value">${evoText}</span>
+            </div>
+        `;
+        panel.appendChild(info);
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'zoom-close-btn';
+        closeBtn.textContent = '关闭';
+        closeBtn.addEventListener('click', () => {
+            overlay.style.display = 'none';
+        });
+        panel.appendChild(closeBtn);
+
+        const hint = document.createElement('div');
+        hint.className = 'zoom-close-hint';
+        hint.textContent = '点击空白处关闭';
+        panel.appendChild(hint);
+
+        overlay.appendChild(panel);
+        overlay.style.display = 'flex';
     },
 
     /**
@@ -384,46 +453,81 @@ const UI = {
     },
 
     /**
-     * 显示对手详情
+     * 显示对手详情（优化格式：分数、永久能力、已扣资源、保留区、收藏图鉴）
      */
     showOpponentDetail(playerId) {
         const state = GameState.get();
         const player = state.players[playerId];
-        
-        document.getElementById('detailPlayerName').textContent = `${playerId} 的详情`;
-        
+        if (!player) return;
+
+        document.getElementById('detailPlayerName').textContent = playerId;
+
         const detailContent = document.getElementById('detailContent');
-        const totalTokens = Object.values(player.tokens).reduce((a, b) => a + b, 0);
         const score = Game.calculateScore(player);
-        
+        const ap = Game.calculateAbilityPoints(player);
+        const tokens = player.tokens || {};
+        const GEM_IDS = ['fire', 'water', 'electric', 'psychic', 'dark'];
+
+        const apStr = GEM_IDS.map(g => `${ICONS[g] || ''}${ap[g] || 0}`).join(' ');
+        const tokenParts = [];
+        TOKEN_TYPES.forEach(t => {
+            const n = tokens[t] || 0;
+            if (n > 0) tokenParts.push(`${ICONS[t] || ''}${n}`);
+        });
+        const tokenStr = tokenParts.length ? tokenParts.join(' ') : '—';
+
         detailContent.innerHTML = `
-            <div style="padding:10px; background:rgba(255,255,255,0.1); border-radius:8px; margin-bottom:10px;">
-                <div>总分数: ${score}</div>
-                <div>资源合计: ${totalTokens}</div>
+            <div class="detail-stats">
+                <div class="detail-stat-row">
+                    <span class="detail-label">分数</span>
+                    <span class="detail-value detail-score">🏆 ${score}</span>
+                </div>
+                <div class="detail-stat-row">
+                    <span class="detail-label">永久能力</span>
+                    <span class="detail-value">${apStr}</span>
+                </div>
+                <div class="detail-stat-row">
+                    <span class="detail-label">已扣资源</span>
+                    <span class="detail-value">${tokenStr}</span>
+                </div>
             </div>
+            <div class="detail-sections"></div>
         `;
 
-        // 保留区
-        const reservedSection = document.createElement('div');
-        reservedSection.innerHTML = '<div class="sidebar-title">📦 保留区</div>';
-        const reservedCards = document.createElement('div');
-        reservedCards.className = 'detail-cards';
-        player.reserved.forEach(card => {
-            reservedCards.appendChild(this.createCard(card));
-        });
-        reservedSection.appendChild(reservedCards);
-        detailContent.appendChild(reservedSection);
+        const sectionsEl = detailContent.querySelector('.detail-sections');
 
-        // 收藏图鉴
-        const caughtSection = document.createElement('div');
-        caughtSection.innerHTML = '<div class="sidebar-title">🏆 收藏图鉴</div>';
-        const caughtCards = document.createElement('div');
-        caughtCards.className = 'detail-cards';
-        player.caught.forEach(card => {
-            caughtCards.appendChild(this.createCard(card));
-        });
-        caughtSection.appendChild(caughtCards);
-        detailContent.appendChild(caughtSection);
+        if (player.reserved && player.reserved.length > 0) {
+            const reservedSection = document.createElement('div');
+            reservedSection.className = 'detail-section';
+            reservedSection.innerHTML = '<div class="detail-section-title">📦 保留区</div>';
+            const reservedCards = document.createElement('div');
+            reservedCards.className = 'detail-cards';
+            player.reserved.forEach(card => {
+                reservedCards.appendChild(this.createCard(card));
+            });
+            reservedSection.appendChild(reservedCards);
+            sectionsEl.appendChild(reservedSection);
+        }
+
+        if (player.caught && player.caught.length > 0) {
+            const caughtSection = document.createElement('div');
+            caughtSection.className = 'detail-section';
+            caughtSection.innerHTML = '<div class="detail-section-title">🏆 收藏图鉴</div>';
+            const caughtCards = document.createElement('div');
+            caughtCards.className = 'detail-cards';
+            player.caught.forEach(card => {
+                caughtCards.appendChild(this.createCard(card));
+            });
+            caughtSection.appendChild(caughtCards);
+            sectionsEl.appendChild(caughtSection);
+        }
+
+        if (!sectionsEl.hasChildNodes() || sectionsEl.children.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'detail-empty';
+            empty.textContent = '暂无保留卡牌与收藏';
+            sectionsEl.appendChild(empty);
+        }
 
         document.getElementById('detailModal').style.display = 'flex';
     },
