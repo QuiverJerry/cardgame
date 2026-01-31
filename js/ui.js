@@ -15,7 +15,6 @@ const UI = {
         this.renderBankTokens();
         this.renderOpponents();
         this.renderPlayerDashboard();
-        this.renderGameLog();
     },
 
     /**
