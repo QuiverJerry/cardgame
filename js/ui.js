@@ -27,10 +27,17 @@ const UI = {
 
         const indicator = document.getElementById('turnIndicator');
         const endBtn = document.getElementById('endTurnBtn');
+        const undoBtn = document.getElementById('undoBtn');
 
         indicator.textContent = isMyTurn ? "🟢 你的回合" : `🟡 ${currentPlayer}`;
         indicator.style.color = isMyTurn ? "#00ff00" : "#ffcb05";
         endBtn.style.background = isMyTurn ? "#4caf50" : "#444";
+
+        if (undoBtn) {
+            const canUndo = GameState.canUndo();
+            undoBtn.disabled = !isMyTurn || !canUndo;
+            undoBtn.style.opacity = (isMyTurn && canUndo) ? "1" : "0.5";
+        }
 
         document.getElementById('roomDisplay').textContent =
             `${GameState.getMyId()} | 房间:${GameState.getRoomId()}`;

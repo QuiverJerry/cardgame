@@ -19,6 +19,9 @@ let localState = {
     playerOrder: []
 };
 
+// 撤销栈：仅当前回合内可撤销的操作（捕捉/进化/保留/从保留区捕捉）
+let undoStack = [];
+
 // 当前玩家ID
 let myId = '';
 
@@ -40,6 +43,7 @@ const GameState = {
             turnIndex: 0,
             playerOrder: []
         };
+        undoStack = [];
     },
 
     /**
@@ -122,5 +126,33 @@ const GameState = {
      */
     getRoomId() {
         return roomId;
+    },
+
+    /**
+     * 压入撤销项（仅当前玩家、当前回合的操作）
+     */
+    pushUndo(entry) {
+        undoStack.push(entry);
+    },
+
+    /**
+     * 弹出撤销项
+     */
+    popUndo() {
+        return undoStack.pop();
+    },
+
+    /**
+     * 是否有可撤销操作
+     */
+    canUndo() {
+        return undoStack.length > 0;
+    },
+
+    /**
+     * 清空撤销栈（结束回合或重置时调用）
+     */
+    clearUndo() {
+        undoStack = [];
     }
 };

@@ -22,6 +22,11 @@ function bindEvents() {
     // 登录按钮
     document.getElementById('joinGameBtn').addEventListener('click', joinGame);
 
+    // 撤回按钮
+    document.getElementById('undoBtn').addEventListener('click', () => {
+        Game.undo();
+    });
+
     // 结束回合按钮
     document.getElementById('endTurnBtn').addEventListener('click', () => {
         Game.endTurn();

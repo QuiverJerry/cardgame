@@ -96,6 +96,22 @@
     font-size: clamp(9px, 2.2vmin, 13px);
 }
 
+.top-bar-btn,
+#undoBtn {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: clamp(9px, 2.2vmin, 13px);
+    background: #2196f3;
+}
+
+#undoBtn:disabled {
+    cursor: not-allowed;
+}
+
 /* 主游戏区域：不滚动，高度弹性填满 */
 .main-area {
     flex: 1;
