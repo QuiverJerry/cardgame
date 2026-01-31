@@ -88,7 +88,7 @@ const GameState = {
      */
     addLog(log) {
         localState.logs.push(log);
-        if (localState.logs.length > 3) {
+        if (localState.logs.length > 50) {
             localState.logs.shift();
         }
     },

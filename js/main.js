@@ -44,6 +44,19 @@ function bindEvents() {
         this.style.display = 'none';
     });
 
+    // 日志按钮：打开日志弹窗
+    document.getElementById('logBtn').addEventListener('click', () => {
+        UI.showLogPanel();
+    });
+
+    // 日志弹窗：关闭按钮 + 点击遮罩关闭
+    document.querySelector('#logModal .log-close-btn').addEventListener('click', () => {
+        UI.closeLogPanel();
+    });
+    document.getElementById('logModal').addEventListener('click', function(e) {
+        if (e.target === this) UI.closeLogPanel();
+    });
+
     // 模态框取消按钮
     document.querySelector('#actionModal .cancel-btn').addEventListener('click', () => {
         UI.closeModal('actionModal');

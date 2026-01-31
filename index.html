@@ -16,7 +16,7 @@
     <div id="loginScreen">
         <div class="login-box">
             <h2 style="color:#2a5298; margin-bottom: 10px;">💎 宝可梦璀璨宝石</h2>
-            <input type="text" id="serverUrl" value="ws://localhost:8001">
+            <input type="text" id="serverUrl" value="wss://cardgame-production-8c36.up.railway.app">
             <input type="text" id="roomId" placeholder="房间号" value="101">
             <input type="text" id="userId" placeholder="名字" value="小智">
             <button id="joinGameBtn">进入赛场</button>
@@ -34,6 +34,7 @@
                 <button id="undoBtn" class="top-bar-btn" title="撤回上一项捕捉/进化/保留操作">撤回</button>
                 <button id="endTurnBtn">结束</button>
             </div>
+            <button id="logBtn" class="top-bar-btn" title="查看游戏日志" style="background:#607d8b;">日志</button>
             <button id="resetBtn" style="background:#ef5350; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px;">重置</button>
         </div>
 
@@ -95,6 +96,15 @@
             <h3 id="modalCardName">卡牌</h3>
             <div id="modalButtons"></div>
             <button class="modal-btn cancel-btn">取消</button>
+        </div>
+    </div>
+
+    <!-- 游戏日志模态框 -->
+    <div id="logModal" class="modal">
+        <div class="modal-content log-modal-content">
+            <h2 class="log-modal-title">📜 游戏日志</h2>
+            <div id="gameLog" class="log-list"></div>
+            <button class="modal-btn close-btn log-close-btn" style="background:#2c3e50;">关闭</button>
         </div>
     </div>
 

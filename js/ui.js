@@ -5,6 +5,12 @@
 // 长按计时器
 let longPressTimer = null;
 
+function escapeHtml(str) {
+    if (str == null) return '';
+    const s = String(str);
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 const UI = {
     /**
      * 渲染整个界面
@@ -15,6 +21,7 @@ const UI = {
         this.renderBankTokens();
         this.renderOpponents();
         this.renderPlayerDashboard();
+        this.renderGameLog();
     },
 
     /**
@@ -216,16 +223,35 @@ const UI = {
     },
 
     /**
-     * 渲染游戏日志
+     * 渲染游戏日志（列表内容，打开弹窗时也会刷新）
      */
     renderGameLog() {
         const state = GameState.get();
         const logDiv = document.getElementById('gameLog');
         if (!logDiv) return;
-        logDiv.innerHTML = (state.logs || []).map(log => `<div>${log}</div>`).join('');
-        if (logDiv.classList.contains('open')) {
+        const logs = state.logs || [];
+        logDiv.innerHTML = logs.length
+            ? logs.map(log => `<div class="log-line">${escapeHtml(log)}</div>`).join('')
+            : '<div class="log-line log-empty">暂无记录</div>';
+        const modal = document.getElementById('logModal');
+        if (modal && modal.style.display === 'flex') {
             logDiv.scrollTop = logDiv.scrollHeight;
         }
+    },
+
+    /**
+     * 打开日志弹窗
+     */
+    showLogPanel() {
+        this.renderGameLog();
+        document.getElementById('logModal').style.display = 'flex';
+    },
+
+    /**
+     * 关闭日志弹窗
+     */
+    closeLogPanel() {
+        document.getElementById('logModal').style.display = 'none';
     },
 
     /**

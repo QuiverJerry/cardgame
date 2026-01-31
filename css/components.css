@@ -149,3 +149,52 @@
     transform: scale(0.9);
     margin: -5px;
 }
+
+/* 游戏日志弹窗 */
+.log-modal-content {
+    width: 92%;
+    max-width: 380px;
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+}
+
+.log-modal-title {
+    color: #ffcb05;
+    margin: 0 0 10px 0;
+    font-size: clamp(14px, 3.2vmin, 18px);
+}
+
+.log-list {
+    flex: 1;
+    min-height: 120px;
+    max-height: 50vh;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    font-size: clamp(11px, 2.5vmin, 14px);
+    line-height: 1.5;
+}
+
+.log-line {
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    word-break: break-word;
+}
+
+.log-line:last-child {
+    border-bottom: none;
+}
+
+.log-empty {
+    color: #888;
+    font-style: italic;
+}
+
+.log-close-btn {
+    flex-shrink: 0;
+}
