@@ -49,6 +49,15 @@ function bindEvents() {
         UI.closeModal('detailModal');
     });
 
+    // 日志按钮：点击展开/收起日志面板
+    document.getElementById('logBtn').addEventListener('click', () => {
+        const panel = document.getElementById('gameLog');
+        panel.classList.toggle('open');
+        if (panel.classList.contains('open')) {
+            panel.scrollTop = panel.scrollHeight;
+        }
+    });
+
 }
 
 /**

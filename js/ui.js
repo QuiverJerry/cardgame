@@ -131,7 +131,7 @@ const UI = {
 
             const line2 = document.createElement('div');
             line2.className = 'opp-tokens-row';
-            GEM_IDS.forEach(tokenType => {
+            TOKEN_TYPES.forEach(tokenType => {
                 const count = tokens[tokenType] || 0;
                 if (count > 0) {
                     const circle = document.createElement('div');
@@ -215,7 +215,11 @@ const UI = {
     renderGameLog() {
         const state = GameState.get();
         const logDiv = document.getElementById('gameLog');
-        logDiv.innerHTML = state.logs.map(log => `<div>${log}</div>`).join('');
+        if (!logDiv) return;
+        logDiv.innerHTML = (state.logs || []).map(log => `<div>${log}</div>`).join('');
+        if (logDiv.classList.contains('open')) {
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
     },
 
     /**
